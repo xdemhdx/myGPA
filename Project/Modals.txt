@@ -1,0 +1,27 @@
+<Modal
+      animationType="slide"
+      transparent={true}
+      visible={modalVisible}
+    >
+      <View style={styles.centeredView}>
+        <View style={styles.modalView}>
+          <Text style={styles.modalText}>Edit Course Details</Text>
+          <TextInput
+            style={styles.input}
+            placeholder="Course Name"
+          />
+          <TextInput
+            style={styles.input}
+            placeholder="Credits"
+            keyboardType="numeric"
+          />
+          <TouchableOpacity onPress={() => setModalVisible(!modalVisible)} style={styles.button} >
+            <Text style={styles.buttonText}>Save</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </Modal>
+
+
+
+

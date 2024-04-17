@@ -1,0 +1,22 @@
+const semesters = [
+  {
+    semesterName: "Fall 2023",
+    courses: [
+      { courseName: "Math 101", grade: "A", credits: 3 },
+      { courseName: "History 201", grade: "B+", credits: 4 },
+      { courseName: "Physics 301", grade: "A-", credits: 3 }
+    ]
+  },
+  {
+    semesterName: "Spring 2024",
+    courses: [
+      { courseName: "English 102", grade: "B", credits: 3 },
+      { courseName: "Chemistry 202", grade: "A", credits: 4 },
+      { courseName: "Computer Science 101", grade: "A+", credits: 3 }
+    ]
+  }
+];
+
+
+
+

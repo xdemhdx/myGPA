@@ -1,0 +1,261 @@
+import re
+import json
+
+text = """
+UNOFFICIAL TRANSCRIPT
+Date Issued: 21/01/2024
+Page 1 of 4
+Name: Talib Ismail Tambe College: College of Computing and IT
+Student ID: 60101158 Credential: Bachelor of Science
+Date of Birth: 16/04/2002 Major: Information Systems
+Nationality: India Status: Active in Program
+Date Fall 2021 - Spring 2022
+Institution College of the North Atlantic - Qatar INSTITUTIONAL CREDIT
+Credential B.Sc. - IT
+Credits Accepted 0.000 Fall 2020
+Course Title Attempted Earned Grade Points
+CM 1040 Academic Reading 3.00 3.00 90 12.00
+CP 1000 Computer Essentials 3.00 3.00 95 12.00
+Date Fall 2022
+CP 1360 Programming I 3.00 3.00 90 12.00
+Institution University of Doha for Science & Technology
+MA 1900 Problem Solving for IT 4.00 4.00 95 16.00
+Credential B.Sc. - IT
+SD 1570 Effective Learning 4.00 4.00 100 16.00
+Credits Accepted 0.000
+Term Totals 17.00 17.00 68.00
+Cumulative Totals 17.00 17.00 68.00
+EXEMPTIONS Term GPA 4.00
+Cumulative GPA 4.00
+Course Title Credits Grade Term Academic Standing Clear Standing - Regular Level
+BUSG 2002 Project Management 0.00 EN Fall 2021 Honor Standing
+COMM 1010 English Communication I 0.00 EN Fall 2021
+DACS 2201 Intro to Data & Cyber Security 0.00 EN Fall 2021
+ECON 1001 Global Economic Concepts 0.00 EN Fall 2021
+EFFL 1001 Effective Learning 0.00 EN Fall 2021
+INFS 1101 Intro to Comp & Prob Solving 0.00 EN Fall 2021
+INFS 1201 Computer Programming 0.00 EN Fall 2021
+INFT 1201 Computer Hardware 0.00 EN Fall 2021
+MATH 1050 Linear Algebra 0.00 EN Fall 2021
+SCIE 1002 Science & the Environment 0.00 EN Fall 2021
+SSHA 1003 Introductory Psychology 0.00 EN Fall 2021
+MATH 1020 Pre-Calculus 0.00 EN Spring 2022
+INFS 4205 Emerging Mobile Technologies 0.00 EN Fall 2022
+INFT 2102 Mathematics for IT 0.00 EN Fall 2022
+INFT 2102 Mathematics for IT 0.00 EN Fall 2022
+INFT 2202 Linux Foundations 0.00 EN Fall 2022
+UNOFFICIAL TRANSCRIPT
+Date Issued: 21/01/2024
+Page 2 of 4
+Name: Talib Ismail Tambe College: College of Computing and IT
+Student ID: 60101158 Credential: Bachelor of Science
+Date of Birth: 16/04/2002 Major: Information Systems
+Nationality: India Status: Active in Program
+Winter 2021 Fall 2021
+Course Title Attempted Earned Grade Points Course Title Attempted Earned Grade Points
+CM 2310 Essential Communications 3.00 3.00 80 12.00 INFS 2101 Web Technologies I 3.00 3.00 A 12.00
+CP 1050 Computer Architecture 3.00 3.00 95 12.00 INFS 2201 Database Management Systems 3.00 3.00 B+ 10.50
+CP 1436 Web I 3.00 3.00 90 12.00 INFS 3102 Object-Oriented Programming 3.00 3.00 C+ 7.50
+CP 1932 Systems Analysis 3.00 3.00 80 12.00 MATH 1030 Calculus I 3.00 3.00 B+ 10.50
+CP 2040 Programming II 4.00 4.00 85 16.00 Term Totals 12.00 12.00 40.50
+PR 2155 Project Management 3.00 3.00 80 12.00 Cumulative Totals 57.00 57.00 220.50
+Term Totals 19.00 19.00 76.00 Term GPA 3.38
+Cumulative Totals 36.00 36.00 144.00 Cumulative GPA 3.87
+Term GPA 4.00 Academic Standing
+Cumulative GPA 4.00 Distinction Award
+Academic Standing Clear Standing - Regular Level
+Honor Standing
+Winter 2022
+Course Title Attempted Earned Grade Points
+Spring 2021 COMM 1020 English Communication II 3.00 3.00 B+ 10.50
+Course Title Attempted Earned Grade Points DACS 2101 Discrete Structures 3.00 3.00 B+ 10.50
+CR 1041 Customer Service for IT 2.00 2.00 95 8.00 DSAI 2201 Intro to Data Science and AI 3.00 3.00 C+ 7.50
+CR 1270 Information Security I 4.00 4.00 95 16.00 INFT 2201 Intro to Operating Systems 3.00 3.00 B 9.00
+EP 1310 ICT in Organizations 3.00 3.00 90 12.00 Term Totals 12.00 12.00 37.50
+Term Totals 9.00 9.00 36.00 Cumulative Totals 69.00 69.00 258.00
+Cumulative Totals 45.00 45.00 180.00 Term GPA 3.13
+Term GPA 4.00 Cumulative GPA 3.74
+Cumulative GPA 4.00 Academic Standing Clear Standing
+Academic Standing Clear Standing - Regular Level
+Honor Standing
+Dean's List
+UNOFFICIAL TRANSCRIPT
+Date Issued: 21/01/2024
+Page 3 of 4
+Name: Talib Ismail Tambe College: College of Computing and IT
+Student ID: 60101158 Credential: Bachelor of Science
+Date of Birth: 16/04/2002 Major: Information Systems
+Nationality: India Status: Active in Program
+Spring 2022 Winter 2023
+Course Title Attempted Earned Grade Points Course Title Attempted Earned Grade Points
+INFS 1301 Computing Ethics and Society 3.00 3.00 A 12.00 INFS 3201 Web Technologies II 3.00 3.00 A 12.00
+MATH 1040 Statistics 3.00 3.00 A 12.00 INFS 3202 IT Systems Integration 3.00 3.00 B+ 10.50
+Term Totals 6.00 6.00 24.00 INFS 3203 Systems Deploy & Implement 3.00 3.00 B 9.00
+Cumulative Totals 75.00 75.00 282.00 INFT 3203 Web Server Management 3.00 3.00 B+ 10.50
+Term GPA 4.00 Term Totals 12.00 12.00 42.00
+Cumulative GPA 3.76 Cumulative Totals 97.00 97.00 360.50
+Academic Standing Term GPA 3.50
+Cumulative GPA 3.72
+Academic Standing Clear Standing
+Fall 2022
+Course Title Attempted Earned Grade Points
+INFS 3103 Systems Analysis and Design 3.00 3.00 B+ 10.50 Spring 2023
+INFS 3104 Data Structures and Algorithms 3.00 3.00 A 12.00 Course Title Attempted Earned Grade Points
+INFT 2101 Networking I 4.00 4.00 B+ 14.00 GARC 1001 Qatar History & Society 3.00 3.00 A 12.00
+Term Totals 10.00 10.00 36.50 INFS 3301 Human Computer Interaction 3.00 3.00 A 12.00
+Cumulative Totals 85.00 85.00 318.50 Term Totals 6.00 6.00 24.00
+Term GPA 3.65 Cumulative Totals 103.00 103.00 384.50
+Cumulative GPA 3.75 Term GPA 4.00
+Academic Standing Clear Standing Cumulative GPA 3.73
+Academic Standing
+UNOFFICIAL TRANSCRIPT
+Date Issued: 21/01/2024
+Page 4 of 4
+Name: Talib Ismail Tambe College: College of Computing and IT
+Student ID: 60101158 Credential: Bachelor of Science
+Date of Birth: 16/04/2002 Major: Information Systems
+Nationality: India Status: Active in Program
+Fall 2023
+Course Title Attempted Earned Grade Points
+COMP 4101 Practicum 3.00 3.00 B 9.00
+DACS 4102 Web Security 3.00 3.00 A 12.00
+INFS 4104 Mobile App Technologies 3.00 3.00 A 12.00
+INFS 4202 SW Testing & Quality Assurance 3.00 3.00 C+ 7.50
+Term Totals 12.00 12.00 40.50
+Cumulative Totals 115.00 115.00 425.00
+Term GPA 3.38
+Cumulative GPA 3.70
+Academic Standing Clear Standing
+Winter 2024
+Course Title Attempted Earned Grade Points
+COMP 4201 Capstone Project 3.00
+INFS 4101 IS Management & Strategy 3.00
+INFS 4103 UI/UX Design 3.00
+Term Totals 9.00
+Cumulative Totals
+Term GPA
+Cumulative GPA
+Academic Standing
+**** End of Transcript ****
+"""
+
+
+#All Courses
+#all_pattern = r'\b[A-Z]{2,4} \d{4} [A-Za-z&\s]+(?:\d{1,2}\.\d{2} ){2}[A-Z\d+/-]+\s\d{1,2}\.\d{2}'
+all_pattern = r'\b[A-Z]{2,4} \d{4} [A-Za-z&\s/-]+(?:\d{1,2}\.\d{2} ){2}[A-Z\d+/-]+\s\d{1,2}\.\d{2}'
+all_courses = []
+all_list = re.findall(all_pattern, text)
+
+for item in all_list:
+    splitted_text = item.split()
+    joined_string = ' '.join(splitted_text[:-4])
+    adict = {
+        "course":joined_string,
+        "grade":splitted_text[-2],
+        "credit":int(float(splitted_text[-4]))
+    }
+    all_courses.append(adict)
+
+
+formatted_json = json.dumps(all_courses, indent=4, sort_keys=True)
+print("All the Courses with grades and credits:")
+print(formatted_json)
+
+
+
+print("")
+
+print("Exempted Courses:")
+
+
+
+#Exmeption List
+#exemptions_pattern = r'\b[A-Z]{2,4} \d{4} [A-Za-z\s&]+ 0\.00 EN\b'
+exemptions_pattern = r'\b[A-Z]{2,4} \d{4} [A-Za-z\s&/-]+ 0\.00 EN\b'
+
+exemption_list = re.findall(exemptions_pattern, text)
+exempted_courses = []
+
+for item in exemption_list:
+    splitted_text = item.split()
+    joined_string = ' '.join(splitted_text[:-2])
+    exempted_courses.append(joined_string)
+print(exempted_courses)
+print(len(exempted_courses))
+
+
+print("")
+
+# Courses that are currently going on (Currently Enrolled)
+#current_pattern = r'\b[A-Z]{2,4} \d{4} [A-Za-z\s&]+ \d+\.\d+\n'
+current_pattern = r'\b[A-Z]{2,4} \d{4} [A-Za-z\s&/-]+ \d+\.\d+\n'
+
+current_list = re.findall(current_pattern, text)
+
+current_courses = []
+
+print("Current Courses/ Currently Enrolled")
+
+for item in current_list:
+    splitted_text = item.split()
+    joined_string = ' '.join(splitted_text[:-1])
+
+    adict = {
+        "course":joined_string,
+        "credit":int(float(splitted_text[-1]))
+    }
+    current_courses.append(adict)
+
+formatted_json = json.dumps(current_courses, indent=4, sort_keys=True)
+print(formatted_json)
+
+
+gpa_pattern = r"(Term GPA|Cumulative GPA)\s+([\d\.]+)"
+
+# Find all matches using the pattern
+gpa_matches = re.findall(gpa_pattern, text)
+
+# Initialize variables to hold the results
+term_gpas = []
+cumulative_gpas = []
+
+# Process each match
+for match in gpa_matches:
+    if match[0] == "Term GPA":
+        term_gpas.append(float(match[1]))
+    elif match[0] == "Cumulative GPA":
+        cumulative_gpas.append(float(match[1]))
+
+print(term_gpas)
+print(cumulative_gpas)
+
+
+data = list(enumerate(zip(term_gpas, cumulative_gpas), start=1))
+
+# Separate entries with Term GPA of 4.0
+perfect_term_gpa = [item for item in data if item[1][0] == 4.0]
+
+# Entries with Term GPA less than 4.0, sorted by Term GPA in descending order, maintaining original order for ties
+other_gpas = sorted([item for item in data if item[1][0] < 4.0], key=lambda x: (x[1][0], x[0]), reverse=True)
+
+# Combine the two lists
+sorted_data = perfect_term_gpa + other_gpas
+
+# Display the sorted data
+for id, (term_gpa, cum_gpa) in sorted_data:
+    print(f'- {id}: Term GPA {term_gpa:.2f}, Cumulative GPA {cum_gpa:.2f}')
+
+
+
+'''
+# Print the results in the requested format
+for i, (term_gpa, cumulative_gpa) in enumerate(zip(term_gpas, cumulative_gpas), start=1):
+    print(f"- {i}: Term GPA {term_gpa}, Cumulative GPA {cumulative_gpa}")
+
+'''
+
+
+
+
+
+
